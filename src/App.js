@@ -1,40 +1,41 @@
-import React from 'react';
+import React from "react";
 
 // import { Route } from 'react-router-dom'
-import Footer from './components/footer';
+import Footer from "./components/footer";
 
 //import Governance from './components/governance'
-import Governance from './components/governance-new'
-import Header from './components/header';
-import AvaxHero from './assets/avaxHero.svg'
+import Governance from "./components/governance-new";
+import Header from "./components/header";
+import AvaxHero from "./assets/avaxHero.svg";
 import NotConnected from "./components/NotConnected";
 import Connected from "./components/Connected";
 
 class App extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       is_wallet_connected: false,
-      darkTheme: false
-    }
+      darkTheme: false,
+    };
   }
 
   toggleTheme = () => {
-    let darkTheme = !this.state.darkTheme
-    document.body.classList[darkTheme?'add':'remove']('dark')
-    this.setState({ darkTheme })
-  }
-
+    let darkTheme = !this.state.darkTheme;
+    document.body.classList[darkTheme ? "add" : "remove"]("dark");
+    this.setState({ darkTheme });
+  };
 
   handleConnection = async () => {
     try {
-      let is_wallet_connected = await window.connectWallet()
-      this.setState({is_wallet_connected, coinbase: await window.web3.eth.getCoinbase()})
+      let is_wallet_connected = await window.connectWallet();
+      this.setState({
+        is_wallet_connected,
+        coinbase: await window.web3.eth.getCoinbase(),
+      });
     } catch (e) {
-      window.alertify.error(String(e))
+      window.alertify.error(String(e));
     }
-  }
+  };
 
   render() {
     return (
@@ -51,24 +52,24 @@ class App extends React.Component {
                   <h1 className="bannerTitle">AVAX Governance</h1>
                   <p className="bannerSubTitle">Give your proposals</p>
                 </div>
-                <div style={{display: 'flex', alignItems: 'flex-end'}}>
-                <img src={AvaxHero} alt='avaxHero' id="avaxHero"/>
+                <div style={{ display: "flex", alignItems: "flex-end" }}>
+                  <img src={AvaxHero} alt="avaxHero" id="avaxHero" />
                 </div>
               </div>
-            
-              
-                <div className="containertop container containertop">
-                  <span style={{display: 'flex'}}>My Wallet</span> 
-              {this.state.is_wallet_connected === false ? (  <>
-                <NotConnected handleConnection={this.handleConnection} />
-                </>
-                
-              ) : (
-                <Connected />)}
+              <div className="container p-0">
+                <div className="containertop col-lg-7">
+                  <span style={{ display: "flex" }}>My Wallet</span>
+                  {this.state.is_wallet_connected === false ? (
+                    <>
+                      <NotConnected handleConnection={this.handleConnection} />
+                    </>
+                  ) : (
+                    <Connected />
+                  )}
                 </div>
-              
+                <Governance />
+              </div>
             </div>
-            <Governance />
           </div>
         </div>
         <Footer />
