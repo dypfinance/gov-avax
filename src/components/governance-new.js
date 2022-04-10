@@ -782,6 +782,8 @@ class ProposalDetails extends React.Component {
   handleSetOption = (option) => {
     if (Number(this.state.depositedTokens) > 0) return;
     this.setState({ option });
+    localStorage.setItem('NoVotesAvax', getFormattedNumber(this.state.proposal._optionTwoVotes / 1e18, 6) );
+
   };
 
   handleExecute = () => {
