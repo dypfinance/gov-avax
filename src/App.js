@@ -53,22 +53,29 @@ class App extends React.Component {
                   <p className="bannerSubTitle">Give your proposals</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "flex-end" }}>
-                  <img src={AvaxHero} alt="avaxHero" id="avaxHero" />
+                  <img src={AvaxHero} alt="AvaxHero" id="avaxHero" />
                 </div>
               </div>
-              <div className="container p-0">
-                <div className="containertop col-lg-7">
-                  <span style={{ display: "flex" }}>My Wallet</span>
-                  {this.state.is_wallet_connected === false ? (
-                    <>
-                      <NotConnected handleConnection={this.handleConnection} />
-                    </>
-                  ) : (
-                    <Connected />
-                  )}
-                </div>
-                <Governance />
+            </div>
+            <div className="container p-0">
+              <div
+                className={`${
+                  !this.state.is_wallet_connected
+                    ? "containertop"
+                    : "connectWallet-blue d-block d-md-flex"
+                } 
+                  col-lg-7`}
+              >
+                {this.state.is_wallet_connected === false ? (
+                  <>
+                    <span style={{ display: "flex" }}>My Wallet</span>
+                    <NotConnected handleConnection={this.handleConnection} />
+                  </>
+                ) : (
+                  <Connected />
+                )}
               </div>
+              <Governance connected={this.state.is_wallet_connected} />
             </div>
           </div>
         </div>

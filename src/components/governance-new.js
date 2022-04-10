@@ -47,10 +47,10 @@ const AddProposal = (props) => {
   });
 
   const setState = (obj) => setFormState({ ...formState, ...obj });
-  let { isOwner } = props;
+  let { isOwner, connected } = props;
   return (
     <div>
-      <div className="l-box addProposal">
+      <div className="l-box addProposal" style={{ marginTop: connected ? 43 : 0}}>
         <h3 style={{ textAlign: "left" }}>Submit a proposal</h3>
         <form onSubmit={props.onSubmit(formState)}>
           <div>
@@ -231,7 +231,7 @@ export default class Governance extends React.Component {
     this.state = {
       proposals: [],
       total_proposals: 0,
-      isLoading: true,
+      isLoading: false,
       token_balance: "",
       totalDeposited: "",
       lastVotedProposalStartTime: "",
@@ -241,7 +241,6 @@ export default class Governance extends React.Component {
   }
 
   refreshProposals = async () => {
-    if (this.state.is_wallet_connected === true) {
       if (this.state.isLoading && this.state.proposals.length > 0) return;
       this.setState({ isLoading: true });
       try {
@@ -266,7 +265,7 @@ export default class Governance extends React.Component {
       } finally {
         this.setState({ isLoading: false });
       }
-    }
+    
   };
 
   getProposal = async (_proposalId) => {
@@ -287,7 +286,6 @@ export default class Governance extends React.Component {
   };
 
   componentDidMount() {
-    this.refreshProposals();
     this.refreshBalance();
     this.checkConnection();
     this.getProposal();
@@ -296,6 +294,15 @@ export default class Governance extends React.Component {
   }
   componentWillUnmount() {
     clearInterval(window.gRefBalInterval);
+  }
+
+  async shouldComponentUpdate(nextState) {
+    if (nextState.connected !== this.props.connected) {
+      await this.refreshProposals();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   handleProposalSubmit = (formState) => (e) => {
@@ -390,6 +397,11 @@ export default class Governance extends React.Component {
   handleClaim = (e) => {
     e.preventDefault();
     governance.withdrawAllTokens();
+  };
+
+  handleProposals = async (e) => {
+    e.preventDefault();
+    await this.refreshProposals();
   };
 
   render() {
@@ -522,6 +534,7 @@ export default class Governance extends React.Component {
               >
                 <AddProposal
                   isOwner={isOwner}
+                  connected={this.state.is_wallet_connected}
                   MIN_BALANCE_TO_INIT_PROPOSAL={
                     this.state.MIN_BALANCE_TO_INIT_PROPOSAL
                   }
@@ -623,6 +636,7 @@ class ProposalDetails extends React.Component {
   componentDidMount() {
     this.refreshBalance();
     this.checkConnection();
+    this.refreshProposal();
     window._refreshVoteBalInterval = setInterval(this.refreshBalance, 3000);
     window._refreshBalInterval = setInterval(this.checkConnection, 3000);
 
@@ -829,8 +843,8 @@ class ProposalDetails extends React.Component {
 
     return (
       <div className="token-staking">
-        <div className="row">
-          <div className="col-lg-6 proposalWrapper">
+        <div className="row justify-content-between">
+          <div className="col-lg-5 mt-5 proposalWrapper">
             <div className="row token-staking-form">
               <div className="col-12">
                 <div className="l-box">
@@ -1065,7 +1079,7 @@ class ProposalDetails extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 mt-4">
+          <div className="col-lg-7 mt-4 pl-0">
             <div className="l-box">
               <div className="table-responsive">
                 <h3
@@ -1183,14 +1197,6 @@ class ProposalDetails extends React.Component {
                         />
                       </td>
                     </tr>
-
-                    <tr>
-                      <th className="d-flex">My DYP Balance</th>
-                      <td className="text-right">
-                        <strong>{token_balance}</strong> <small>DYP</small>
-                      </td>
-                    </tr>
-
                     <tr>
                       <th className="d-flex">{this.getOptionText("0")} Votes </th>
                       <td className="text-right">

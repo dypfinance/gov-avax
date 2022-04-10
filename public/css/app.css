@@ -219,16 +219,15 @@ table small {
 }
 
 .exchangeWrapper {
-
-    display: flex;
-    width: 100%;
-    height: 170px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 16px 16px 0;
-    align-items: unset;
-    margin: auto;
-    background-image: url(../img/avaxBanner.svg);
+  display: flex;
+  width: 100%;
+  height: 170px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 16px 16px 0;
+  align-items: unset;
+  margin: auto;
+  background-image: url(../img/avaxBanner.svg);
 }
 
 /* @media all and (min-width: 992px) {
@@ -397,15 +396,42 @@ strong {
   margin: 0 0 auto auto;
   /* width: 100%; */
 }
+.connectWallet-blue {
+  background: linear-gradient(53.66deg, #475fba 1.07%, #1d91d0 90.46%);
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.06);
+  margin: 60px 0 auto auto;
+  border-radius: 6px;
+  /* max-width: 550px; */
+  padding: 15px;
+}
+.colored-container {
+  border-radius: 30px;
+  padding: 10px 20px;
+  color: white;
+  opacity: 1;
+}
+.colored-container img {
+  color: white;
+}
+.colored-container span {
+  color: white;
+  opacity: .7;
+}
+.colored-container:first-child {
+  background-color: #3068AF;
+
+}
+.colored-container:last-child {
+  background-color: #1F7CB8;
+}
 
 .containertop {
-    background: var(--box-bg);
-    box-shadow: 8px 0px 24px rgb(0 0 0 / 6%);
-    margin: 60px 0 auto auto;
-    border-radius: 6px;
-    /* max-width: 550px; */
-    padding-top: 24px;
-
+  background: var(--box-bg);
+  box-shadow: 8px 0px 24px rgb(0 0 0 / 6%);
+  margin: 60px 0 auto auto;
+  border-radius: 6px;
+  /* max-width: 550px; */
+  padding-top: 24px;
 }
 
 .errorWrapper {
@@ -415,7 +441,7 @@ strong {
   align-items: center;
   justify-content: left;
   padding: 10px;
-  color: #F13227;
+  color: #f13227;
   max-width: 450px;
   background: var(--error);
 }
@@ -482,7 +508,7 @@ button.connectWalletBTN {
 }
 
 .proposalWrapper {
-  bottom: 111px;
+  bottom: 123px;
   z-index: 2;
 }
 
@@ -500,17 +526,22 @@ button.connectWalletBTN {
 }
 
 @media screen and (max-width: 1199px) {
-
   .proposalcontainertop {
     max-width: 100%;
   }
   .proposalWrapper {
-    bottom: auto;
+    bottom: 150px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+
+  .proposalWrapper {
+    bottom: inherit;
   }
 }
 
 @media screen and (max-width: 767px) {
-
   .buttonWrapper {
     justify-content: center;
     gap: 20px;
@@ -526,7 +557,7 @@ button.connectWalletBTN {
 }
 
 @media screen and (max-width: 991px) {
-  .addProposal{
+  .addProposal {
     bottom: auto;
     margin-top: 20px;
   }
@@ -536,9 +567,11 @@ button.connectWalletBTN {
   }
 }
 
-@media (max-width: 576px) {
-.container, .container-sm {
-    max-width: 540px;}
+@media (max-width: 991px) {
+  .vault-container,
+  .container-sm {
+    max-width: 540px;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -552,24 +585,22 @@ button.connectWalletBTN {
 }
 
 @media screen and (max-width: 768px) {
-
-  
-    .bannerTitle {
-      font-size: 29px !important;
-    }
-  
-    .bannerSubTitle {
-      font-size: 12px !important;
-    }
-  
-  #ethHero {
-    width: 170px
+  .bannerTitle {
+    font-size: 29px !important;
   }
 
-    .GovDesc {
-      flex-direction: column;
-    }
+  .bannerSubTitle {
+    font-size: 12px !important;
   }
+
+  #avaxHero {
+    width: 170px;
+  }
+
+  .GovDesc {
+    flex-direction: column;
+  }
+}
 
 @media screen and (max-width: 570px) {
   .connectWallet {
@@ -732,27 +763,4 @@ h3 {
   background: url(../img/switch.svg);
   width: 28px;
   height: 28px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  top: 2px;
-}
-
-.ui-switcher[aria-checked="true"] {
-  background: #161218;
-}
-
-.ui-switcher[aria-checked="true"]:after {
-  left: 34px;
-  background: url(../img/su.svg);
-  background-position-x: 0%;
-  background-position-y: 0%;
-  background-repeat: repeat;
-  background-size: auto;
-  width: 28px;
-  height: 28px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  top: 2px;
 }
