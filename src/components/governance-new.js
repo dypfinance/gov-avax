@@ -88,7 +88,7 @@ const AddProposal = (props) => {
                 {stakingPools.map((v, i) => (
                   <option value={v.pools} key={i}>
                     {" "}
-                    {v.name}{" "}
+                    {v ? v.name : 'DYP'}{" "}
                   </option>
                 ))}
               </select>
@@ -318,7 +318,7 @@ export default class Governance extends React.Component {
     this.refreshBalance();
     this.checkConnection();
     this.getProposal();
-    window._refreshBalInterval = setInterval(this.checkConnection, 500);
+    window._refreshBalInterval = setInterval(this.checkConnection, 1000);
     window.gRefBalInterval = setInterval(this.refreshBalance, 7e3);
   }
   componentWillUnmount() {
@@ -485,8 +485,8 @@ export default class Governance extends React.Component {
                 {/* <h3>GOVERNANCE PROPOSALS</h3> */}
                 {this.state.is_wallet_connected === true ? (
                   this.state.proposals.map((props, i) => (
-                    <div className="col-lg-3">
-                      <ProposalCard {...props} key={i} />
+                    <div className="col-lg-3" key={i} >
+                      <ProposalCard {...props}/>
                     </div>
                   ))
                 ) : (
@@ -667,7 +667,7 @@ class ProposalDetails extends React.Component {
     this.checkConnection();
     this.refreshProposal();
     window._refreshVoteBalInterval = setInterval(this.refreshBalance, 3000);
-    window._refreshBalInterval = setInterval(this.checkConnection, 500);
+    window._refreshBalInterval = setInterval(this.checkConnection, 3000);
 
   }
 
@@ -682,11 +682,9 @@ class ProposalDetails extends React.Component {
   };
 
   getProposal = async (_proposalId) => {
-    if (this.state.is_wallet_connected === true) {
     let p = await governance.getProposal(_proposalId);
     p.vault = getPoolForProposal(p);
     return p;
-    }
   };
 
   handleApprove = (e) => {
@@ -899,8 +897,8 @@ class ProposalDetails extends React.Component {
                           marginBottom: 20,
                         }}
                       >
-                        <img height={38} src={proposal.vault.logo.toString()} />{" "}
-                        {proposal.vault.name.toString()}
+                        <img height={38} src={proposal.vault ? proposal.vault.logo.toString() : "/logo192.png"} />{" "}
+                        {proposal.vault ? proposal.vault.name.toString() : "DYP Proposal" }
                       </h5>
                       <div className="input-group ">
                         <input
